@@ -24,7 +24,7 @@
       url = "github:numtide/llm-agents.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    llm-tools.url = "github:mostperfectboy/llm-tools.nix";
+    llm-tools.url = "github:mostperfectdev/llm-tools.nix";
     mcp-nixos.url = "github:utensils/mcp-nixos";
   };
 
