@@ -1,7 +1,6 @@
 {
   nixpkgs,
   home-manager,
-  catppuccin,
   nixos-hardware,
   inputs,
   ...
@@ -21,7 +20,6 @@ let
       }
       // specialArgs;
       modules = [
-        catppuccin.nixosModules.catppuccin
         ../hosts/common/global/default.nix
         ../hosts/${hostname}/default.nix
       ]

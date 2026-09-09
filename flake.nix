@@ -8,7 +8,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    catppuccin.url = "github:catppuccin/nix";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     noctalia = {
       url = "github:noctalia-dev/noctalia/cachix";
@@ -42,7 +41,6 @@
         inherit
           nixpkgs
           home-manager
-          catppuccin
           nixos-hardware
           inputs
           ;
