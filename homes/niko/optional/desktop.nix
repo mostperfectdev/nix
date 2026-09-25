@@ -29,6 +29,7 @@
       sptlrx
     ];
     pointerCursor = {
+      enable = true;
       gtk.enable = true;
       package = pkgs.bibata-cursors;
       name = "Bibata-Modern-Ice";
@@ -62,6 +63,7 @@
         corner_radius_scale = 0.8;
         password_style = "random";
         niri_overview_type_to_launch_enabled = true;
+        launch_apps_as_systemd_services = true;
 
         panel = {
           transparency_mode = "soft";
@@ -105,13 +107,24 @@
       osd.position = "bottom_center";
 
       idle = {
+        pre_action_fade_seconds = 2.0;
+
         behavior.lock = {
-          command = "brightnessctl -s set 25%";
+          timeout = 600;
+          command = "brightnessctl -s set 25% && noctalia msg session lock";
           resume_command = "brightnessctl -r";
           enabled = true;
         };
 
         behavior.screen-off = {
+          timeout = 660;
+          command = "noctalia:dpms-off";
+          resume_command = "noctalia:dpms-on";
+          enabled = true;
+        };
+
+        behavior.suspend = {
+          timeout = 900;
           command = "[ \"$(cat /sys/class/power_supply/AC/online 2>/dev/null)\" = \"0\" ] && systemctl suspend";
           resume_command = "";
           enabled = true;
@@ -140,6 +153,7 @@
         background_opacity = 0.66;
         launcher_position = "start";
         auto_hide = true;
+        reserve_space = false;
       };
 
       desktop_widgets.enabled = true;
@@ -168,14 +182,15 @@
 
       widget.clock.format = "{:%H:%M}";
       widget.workspaces = {
-        display = "numeric";
+        display = "id";
         max_label_chars = 2;
         labels_only_when_occupied = true;
       };
       widget.active_window = {
+        min_length = 80;
         max_length = 240;
         icon_size = 20;
-        title_scroll = "hover";
+        title_scroll = "on_hover";
       };
       widget.media = {
         max_length = 145;
