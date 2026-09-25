@@ -3,15 +3,17 @@
   home = {
     packages = with pkgs; [
       inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
+      inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode2
+      inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.plannotator
       inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.agent-browser
       inputs.llm-tools.packages.${pkgs.stdenv.hostPlatform.system}.next-browser
-      inputs.llm-tools.packages.${pkgs.stdenv.hostPlatform.system}.plannotator
       ast-grep
       python3
       gh
     ];
     sessionVariables = {
       OPENCODE_ENABLE_EXA = "1";
+      OPENCODE_EXPERIMENTAL_DISABLE_COPY_ON_SELECT = "1";
     };
   };
 
