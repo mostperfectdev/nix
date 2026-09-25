@@ -8,7 +8,7 @@
       chromium
       devenv
       corepack_24
-      nodejs_latest
+      nodejs_24
     ];
   };
   xdg.desktopEntries = {
