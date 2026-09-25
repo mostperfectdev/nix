@@ -1,4 +1,4 @@
-# Desktop environment (Hyprland, Waybar, etc)
+# Desktop environment (Niri, Noctalia, etc)
 {
   pkgs,
   inputs,
@@ -7,8 +7,6 @@
 }:
 {
   imports = [
-    inputs.noctalia.homeModules.default
-    ./desktop/hyprland.nix
     ./desktop/niri.nix
     ./desktop/applications.nix
   ];
@@ -24,7 +22,8 @@
       pywalfox-native
       seahorse
       dconf
-      hyprshot
+      grim
+      slurp
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       playerctl
       sptlrx
@@ -54,7 +53,6 @@
 
   programs.noctalia = {
     enable = true;
-    package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
     systemd.enable = true;
 
     settings = {
@@ -86,7 +84,6 @@
 
         templates.builtin_ids = [
           "ghostty"
-          "hyprland"
           "zed"
           "pywalfox"
           "zenBrowser"

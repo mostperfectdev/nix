@@ -17,7 +17,7 @@
 │   │   │   └── user.nix
 │   │   └── optional/      # Feature flags (imported per-host)
 │   │       ├── docker.nix
-│   │       ├── hyprland.nix
+│   │       ├── niri.nix
 │   │       └── filemanager.nix
 │   ├── gom/               # ThinkPad T14s (desktop + dev)
 │   ├── boldan/            # Server
@@ -29,7 +29,7 @@
 │   │   ├── shell.nix
 │   │   └── shell/         # Fish config & tools
 │   ├── optional/          # Feature flags (imported per-host)
-│   │   ├── desktop.nix    # Hyprland, Waybar, etc
+│   │   ├── desktop.nix    # Niri, Noctalia, etc
 │   │   ├── dev.nix        # Work tools
 │   │   └── desktop/
 │   ├── gom.nix            # Host-specific imports
@@ -75,7 +75,7 @@ nix flake show
   - User setup and shell
   
 - **Optional**: Feature flags enabled per host
-  - Desktop environments (hyprland)
+  - Desktop environments (Niri)
   - Development tools
   - Optional services (docker, printing)
 
@@ -89,7 +89,7 @@ Example `hosts/gom/default.nix`:
 ```nix
 imports = [
   ../common/global
-  ../common/optional/hyprland.nix
+  ../common/optional/niri.nix
   ../common/optional/docker.nix
 ];
 ```

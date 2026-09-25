@@ -4,7 +4,6 @@
   imports = [
     ./hardware-configuration.nix
     ../common/global
-    ../common/optional/hyprland.nix
     ../common/optional/niri.nix
     ../common/optional/filemanager.nix
     ../common/optional/docker.nix
