@@ -57,6 +57,9 @@
     systemd.enable = true;
 
     settings = {
+      plugins.enabled = [ "niko/power-heat" ];
+      system.monitor.enabled = true;
+
       shell = {
         font_family = "VictorMono NF";
         avatar_path = "${config.home.homeDirectory}/.face";
@@ -141,7 +144,9 @@
         end = [
           "control-center"
           "tray"
-          "sysmon"
+          "sysmon_cpu"
+          "sysmon_mem"
+          "power_heat"
           "notifications"
           "battery"
           "volume"
@@ -197,13 +202,19 @@
         art_size = 28;
         hide_when_no_media = false;
       };
-      widget.sysmon = {
-        stat = [
-          "cpu"
-          "memory"
-        ];
-        display = "compact";
+      widget.sysmon_cpu = {
+        type = "sysmon";
+        stat = "cpu_usage";
+        display = "gauge";
+        show_label = true;
       };
+      widget.sysmon_mem = {
+        type = "sysmon";
+        stat = "ram_pct";
+        display = "gauge";
+        show_label = true;
+      };
+      widget.power_heat.type = "niko/power-heat:power_heat";
       widget.control-center = {
         custom_image = "noctalia";
         custom_image_colorize = true;
@@ -319,4 +330,61 @@
       enable = true;
     };
   };
+
+  home.file.".local/share/noctalia/plugins/niko-power-heat/plugin.toml".text =
+    ''
+      id = "niko/power-heat"
+      name = "Power and heat"
+      version = "1.0.0"
+      plugin_api = 23
+      author = "niko"
+      license = "MIT"
+      description = "Shows battery power consumption and CPU temperature."
+      tags = ["power", "temperature", "battery"]
+
+      [[widget]]
+      id = "power_heat"
+      entry = "widget.luau"
+    '';
+  home.file.".local/share/noctalia/plugins/niko-power-heat/widget.luau".text =
+    ''
+      local powerWatts = nil
+      local temperatureC = nil
+
+      local function readBatteryPower()
+          for index = 0, 3 do
+              local path = "/sys/class/power_supply/BAT" .. tostring(index) .. "/power_now"
+              local raw = noctalia.readFile(path)
+              if raw ~= nil then
+                  local microwatts = tonumber(raw)
+                  if microwatts ~= nil and microwatts > 0 then
+                      return microwatts / 1000000
+                  end
+              end
+          end
+          return nil
+      end
+
+      local function updateValues()
+          powerWatts = readBatteryPower()
+
+          local stats = noctalia.systemStats()
+          temperatureC = stats and stats.cpu and stats.cpu.tempC or nil
+      end
+
+      local function render()
+          local power = powerWatts and string.format("%.1f W", powerWatts) or "AC"
+          local temperature = temperatureC and string.format("%.0f°C", temperatureC) or "--°C"
+
+          barWidget.setGlyph("temperature")
+          barWidget.setText(power .. " · " .. temperature)
+          barWidget.setTooltip("Battery power: " .. power .. "\nCPU temperature: " .. temperature)
+      end
+
+      function update()
+          noctalia.setUpdateInterval(2000)
+          updateValues()
+          render()
+      end
+    '';
 }
