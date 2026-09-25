@@ -19,6 +19,7 @@
   boot.kernelModules = [
     "synaptics_usb"
   ];
+  # boot.blacklistedKernelModules = [ "mt7925e" ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -30,11 +31,14 @@
 
   networking.hostName = "barlow"; # Define your hostname.
   networking.networkmanager.enable = true;
+  # networking.networkmanager.wifi.powersave = false;
 
   services.openssh.enable = true;
+  programs.mosh.enable = true;
 
   networking.wireless.iwd = {
     enable = true;
+    # settings.DriverQuirks.PowerSaveDisable = "mt7925e";
   };
   networking.networkmanager.wifi.backend = "iwd";
   networking.firewall.allowedTCPPorts = [
