@@ -10,9 +10,9 @@
       dates = [ "03:00" ];
       options = "--delete-older-than 14d";
     };
-
+    registry.nixpkgs.flake = inputs.nixpkgs;
     settings = {
-      experimental-features = "nix-command flakes";
+      experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
       trusted-users = [ "niko" ];
       substituters = [
