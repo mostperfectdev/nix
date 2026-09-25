@@ -23,7 +23,6 @@
       home-manager,
       nixos-hardware,
       nixpkgs,
-      catppuccin,
       mcp-nixos,
       ...
     }@inputs:
