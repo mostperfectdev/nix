@@ -17,6 +17,10 @@
           eval (keychain --eval id_ed25519)
         end
       '';
+      plugins = [
+        { name = "forgit"; src = pkgs.fishPlugins.forgit.src; }
+        { name = "sponge"; src = pkgs.fishPlugins.sponge.src; }
+      ];
     };
 
     starship = {
