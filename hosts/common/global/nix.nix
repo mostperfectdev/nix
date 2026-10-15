@@ -12,7 +12,10 @@
     };
     registry.nixpkgs.flake = inputs.nixpkgs;
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       auto-optimise-store = true;
       trusted-users = [ "niko" ];
       substituters = [
