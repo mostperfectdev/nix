@@ -61,7 +61,7 @@
     };
     nh = {
       enable = true;
-      homeFlake = "/home/niko/nix";
+      flake = "/home/niko/nix";
       clean.enable = true;
     };
     ripgrep.enable = true;
